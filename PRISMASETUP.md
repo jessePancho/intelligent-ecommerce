@@ -60,6 +60,9 @@ model Product {
 }
 ```
 
+### `prisma.config.ts`
+
+```prisma
 import "dotenv/config";
 import { defineConfig, env } from "prisma/config";
 
@@ -69,3 +72,48 @@ datasource: {
 url: env("DATABASE_URL"),
 },
 });
+```
+
+## 🚀 Daily Workflow (The "3-Terminal" Setup)
+
+### 1. Terminal 1 (DB Engine)
+
+`npx prisma dev`
+Keep this running. If you restart it, update the URL in .env
+
+### 2. Terminal 2 (Web Server)
+
+`npm run dev`
+Runs the Next.js frontend at localhose:3000
+
+### 3. Terminal 3 (Studio/Tunnel)
+
+`npx @prima/ppg-tunnel`
+Then run Studio using the generated port:
+`npx prisma studio --url "postgresql://127.0.0.1:[PORT]/postgres?sslmode=disable"`
+
+## 🏠 Moving to a New Device (Home Setup)
+
+### 1. Gitpull
+
+the latest code.
+
+### 2. NVM:
+
+Switch to Node 24 `nvm use 24`
+
+### 3. Install:
+
+`npm install`
+
+### 4. Start DB:
+
+Run `npx prisma dev` and copy the New URL into your local `.env`
+
+### 5. Sync Schema:
+
+Run `npx prisma db push`.
+
+### 6. Seed Data
+
+Run `npx tsx prisma/seed.ts` to re-populate products.
